@@ -1,0 +1,32 @@
+{
+  "name": "diplom_playwright",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "codegen": "npx playwright codegen",
+    "test": "npx playwright test",
+    "code": "npx playwright codegen",
+    "report": "npx playwright show-report",
+    "ui": "npx playwright test --ui",
+    "test:allure": "npm run test && npm run allure:generate",
+    "allure:generate": "allure generate allure-results -o allure-report --clean",
+    "telegram-report": "java \"-DconfigFile=notifications/config.json\" -jar \"notifications/allure-notifications-5.0.2.jar\"",
+    "test:full": "npm run test && npm run allure:generate && npm run telegram-report"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@faker-js/faker": "^10.5.0",
+    "@playwright/test": "^1.62.1",
+    "@types/node": "^26.1.2",
+    "allure-notifications": "^6.0.9",
+    "allure-playwright": "^3.10.2",
+    "dotenv-cli": "^11.0.0"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2"
+  }
+}
