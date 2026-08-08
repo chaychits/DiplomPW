@@ -1,27 +1,112 @@
-name: Playwright Tests
+name: pw7 автотесты UI/API
+
 on:
   push:
-    branches: [ main, master ]
+    branches: [master]
   pull_request:
-    branches: [ main, master ]
+    branches: [master]
+  workflow_dispatch:
+
 jobs:
-  test:
-    timeout-minutes: 60
+  pw7:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
+
     steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-node@v4
-      with:
-        node-version: lts/*
-    - name: Install dependencies
-      run: npm ci
-    - name: Install Playwright Browsers
-      run: npx playwright install --with-deps
-    - name: Run Playwright tests
-      run: npx playwright test
-    - uses: actions/upload-artifact@v4
-      if: ${{ !cancelled() }}
-      with:
-        name: playwright-report
-        path: playwright-report/
-        retention-days: 30
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Установить зависимости
+        run: npm ci
+
+      - name: Установить браузеры Playwright
+        run: npx playwright install --with-deps chromium
+
+      - name: Setup AllureCTL
+        uses: allure-framework/setup-allurectl@v1
+        with:
+          allure-endpoint: https://allure.autotests.cloud
+          allure-token: ${{ secrets.ALLURE_TOKEN }}
+          allure-project-id: 5305
+
+      - name: Запустить тесты
+        run: npx playwright test
+        env:
+          UI_URL: ${{ vars.UI_URL }}
+          API_URL: ${{ vars.API_URL }}
+
+      - name: Загрузить результаты в Allure TestOps
+        if: always()
+        run: allurectl upload allure-results
+
+      - name: Сгенерировать Allure Report
+        if: always()
+        run: npx allure-commandline generate allure-results -o allure-report --clean
+        continue-on-error: true
+
+      - name: Загрузить отчеты как Artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-report
+          path: |
+            allure-report
+            allure-results
+            playwright-report
+          retention-days: 30
+
+      - name: Setup Java
+        if: always()
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Скачать Allure Notifications
+        if: always()
+        run: |
+          mkdir -p notifications
+          curl -L \
+            https://github.com/qa-guru/allure-notifications/releases/download/v5.0.2/allure-notifications-5.0.2.jar \
+            -o notifications/allure-notifications.jar
+
+      - name: Создать config.json для Telegram
+        if: always()
+        run: |
+          cat > notifications/config.json <<EOF
+          {
+            "base": {
+              "project": "dip",
+              "environment": "GitHub Actions",
+              "comment": "Automated test run",
+              "language": "en",
+              "allureFolder": "allure-report/",
+              "allureResultsFolder": "allure-results/",
+              "enableChart": true,
+              "darkMode": true,
+              "links": {
+                "report": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",
+                "build": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+              }
+            },
+            "telegram": {
+              "token": "${{ secrets.TELEGRAM_TOKEN }}",
+              "chat": "${{ secrets.TELEGRAM_CHAT_ID }}",
+              "templatePath": "/templates/telegram.ftl"
+            }
+          }
+          EOF
+
+      - name: Отправить уведомление в Telegram
+        if: always()
+        run: |
+          java \
+            "-DconfigFile=notifications/config.json" \
+            "-Dorg.apache.http.wire=OFF" \
+            -jar notifications/allure-notifications.jar
