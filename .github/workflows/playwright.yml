@@ -2,9 +2,13 @@ name: pw7 автотесты UI/API
 
 on:
   push:
-    branches: [master]
+    branches:
+      - master
+
   pull_request:
-    branches: [master]
+    branches:
+      - master
+
   workflow_dispatch:
 
 jobs:
@@ -25,7 +29,7 @@ jobs:
       - name: Установить зависимости
         run: npm ci
 
-      - name: Установить браузеры Playwright
+      - name: Установить браузер Chromium
         run: npx playwright install --with-deps chromium
 
       - name: Setup AllureCTL
@@ -45,20 +49,37 @@ jobs:
         if: always()
         run: allurectl upload allure-results
 
+      - name: Установить Allure Commandline
+        if: always()
+        run: npm install --no-save allure-commandline
+
       - name: Сгенерировать Allure Report
         if: always()
-        run: npx allure-commandline generate allure-results -o allure-report --clean
-        continue-on-error: true
+        run: npx allure generate allure-results --clean -o allure-report
 
-      - name: Загрузить отчеты как Artifact
+      - name: Проверить summary.json
+        if: always()
+        run: |
+          if [ ! -f "allure-report/widgets/summary.json" ]; then
+            echo "ERROR: summary.json not found"
+            exit 1
+          fi
+          echo "summary.json found"
+
+      - name: Upload Allure Report
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: allure-report
-          path: |
-            allure-report
-            allure-results
-            playwright-report
+          path: allure-report/
+          retention-days: 30
+
+      - name: Upload Allure Results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-results
+          path: allure-results/
           retention-days: 30
 
       - name: Setup Java
@@ -72,8 +93,9 @@ jobs:
         if: always()
         run: |
           mkdir -p notifications
+
           curl -L \
-            https://github.com/qa-guru/allure-notifications/releases/download/v5.0.2/allure-notifications-5.0.2.jar \
+            "https://github.com/qa-guru/allure-notifications/releases/download/v5.0.2/allure-notifications-5.0.2.jar" \
             -o notifications/allure-notifications.jar
 
       - name: Создать config.json для Telegram
@@ -85,20 +107,15 @@ jobs:
               "project": "dip",
               "environment": "GitHub Actions",
               "comment": "Automated test run",
-              "language": "en",
+              "language": "ru",
               "allureFolder": "allure-report/",
-              "allureResultsFolder": "allure-results/",
               "enableChart": true,
               "darkMode": true,
-              "links": {
-                "report": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",
-                "build": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-              }
+              "reportLink": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
             },
             "telegram": {
               "token": "${{ secrets.TELEGRAM_TOKEN }}",
-              "chat": "${{ secrets.TELEGRAM_CHAT_ID }}",
-              "templatePath": "/templates/telegram.ftl"
+              "chat": "${{ secrets.TELEGRAM_CHAT_ID }}"
             }
           }
           EOF
