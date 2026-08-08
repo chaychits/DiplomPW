@@ -1,11 +1,12 @@
-```yaml
 name: pw7 автотесты UI/API
 
 on:
   push:
-    branches: [master]
+    branches:
+      - master
   pull_request:
-    branches: [master]
+    branches:
+      - master
   workflow_dispatch:
 
 jobs:
@@ -15,7 +16,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -118,4 +119,3 @@ jobs:
             "-DconfigFile=notifications/config.json" \
             "-Dorg.apache.http.wire=OFF" \
             -jar notifications/allure-notifications.jar
-```
