@@ -106,7 +106,7 @@ jobs:
               "links": {
                 "report": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",
                 "build": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",
-                "allure_testops": "https://allure.autotests.cloud/project/5305"
+                "testops": "https://allure.autotests.cloud/project/5305"
 
             },
             "telegram": {
