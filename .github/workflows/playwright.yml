@@ -108,7 +108,7 @@ jobs:
                 "build": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",
                 "allure": "https://allure.autotests.cloud/project/5305",
                 "allure_testops": "https://allure.autotests.cloud/project/5305"
-}
+
             },
             "telegram": {
               "token": "${{ secrets.TELEGRAM_BOT_TOKEN }}",
