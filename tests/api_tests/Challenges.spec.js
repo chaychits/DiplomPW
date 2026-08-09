@@ -8,8 +8,6 @@ const urlApi = 'https://apichallenges.eviltester.com';
 let token
 let location
 
-const EXISTING_ID = 1;
-const INVALID_ID = 99999;
 
 test.beforeAll(async ({ api }) => {
     
@@ -22,11 +20,9 @@ test.beforeAll(async ({ api }) => {
 
 
 // Тест 3 Получение списка задач в JSON формате с прогрессом /challenges
-test('GET /challenges (200) OK @get', async ({api}) => {
+test('GET /challenges (200) OK @get', async ({ api }) => {
     const response = await api.challenges.get(token);
 
-    const {body, headers} = await api.challenges.get(token)
-
-    expect(response.status).toBe(200)
-    expect(response.body.challenges).toBeDefined()
+    expect(response.status).toBe(200);
+    expect(response.body.challenges).toBeDefined();
 });

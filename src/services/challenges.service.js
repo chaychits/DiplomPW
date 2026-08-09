@@ -1,9 +1,5 @@
 import { test } from '@playwright/test';
 
-// todo
-const urlApi = 'https://apichallenges.eviltester.com';
-
-
 export class ChallengesService {
     constructor (request) {
         this.request = request;
@@ -12,7 +8,7 @@ export class ChallengesService {
     // Бизнес-сценарии для эндпоинта
     async get(token){
         return test.step('get /challenges', async () => {
-            let response = await this.request.get(`${urlApi}/challenges`, {
+            let response = await this.request.get(`${process.env.API_URL}/challenges`, {
             headers: {
                 'x-challenger': token
         }

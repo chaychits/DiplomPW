@@ -19,7 +19,7 @@ test('Пользователь может создать новую статью
     await app.yourfeed.openNewArticle();
     await app.create.createArticle(article.title, article.description, article.content, article.tag)
 
-    await expect(await app.newArticle.newArticle).toHaveText(article.title);
+    await expect(app.newArticle.newArticle).toHaveText(article.title);
 
 });
 

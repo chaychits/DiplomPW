@@ -8,7 +8,7 @@ let token
 let location
 
 const EXISTING_ID = 1;
-const INVALID_ID = 99999;
+
 
 test.beforeAll(async ({ api }) => {
     
@@ -61,7 +61,7 @@ test('POST /todos (201) @post', async ({ api }) => {
 
 // Тест 10 Неверный doneStatus /todos
 
-test('POST /todos (400) doneStatus @post', async ({ api }) => {
+test('POST /todos (422) invalid doneStatus @post', async ({ api }) => {
     const todo = new TodoBuilder()
         .withTitle('A title')
         .withDoneStatus(55)
@@ -78,9 +78,8 @@ test('POST /todos (400) doneStatus @post', async ({ api }) => {
 test('PUT /todos/{id} full (200) @put', async ({ api }) => {
     
     const getResponse = await api.todos.getTodosById(token, EXISTING_ID);
-    expect(getResponse.status).toBe(200);
 
-    const todo = getResponse.body.todos[0];
+expect(getResponse.status).toBe(200);
 
     
     const updatedTodo = new TodoBuilder()

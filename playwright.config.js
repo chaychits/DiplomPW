@@ -5,7 +5,7 @@ import dotenv from 'dotenv';
 // Загружаем .env только при локальном запуске
 // В Jenkins/GitHub Actions переменные будут приходить через Secrets
 if (!process.env.CI) {
-  dotenv.config();
+    dotenv.config({ path: '.env' });
 }
 
 /**
@@ -39,7 +39,7 @@ export default defineConfig({
   use: {
 
     // базовый URL можно брать из .env
-    baseURL: process.env.BASE_URL,
+    baseURL: process.env.UI_URL,
 
     // Сохранять трассировку при падении
     trace: 'on-first-retry',

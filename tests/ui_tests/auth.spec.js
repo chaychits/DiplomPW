@@ -17,7 +17,7 @@ test('Пользователь может зарегистрироваться �
     await app.main.openSignUpPage();
     await app.registration.signup(user.username, user.email, user.password);
 
-    await expect(await app.yourfeed.getProfileName()).toContainText(user.username);
+    await expect(app.yourfeed.getProfileName()).toContainText(user.username);
 });
 
 

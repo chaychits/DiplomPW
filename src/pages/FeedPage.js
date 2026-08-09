@@ -6,15 +6,15 @@ export class YourfeedPage {
         // здесь мы описываем техническую реализацию страницы
         
         // здесь все про элементы
-        this.profileName = page.getByRole('navigation');
-        this.newArticleLink = page.getByRole('link', {name: 'New Article'});
-        this.articleNotAvailable = page.locator('.article-preview')
-        this.buttonGlobalFeed = page.getByRole('button', { name: ' Global Feed' });
-        this.articles = page.locator('h1');
+        this.profileName = page.locator('nav.navbar');
+        this.newArticleLink = page.getByRole('link', { name: 'New Article' });
+        this.articleNotAvailable = page.locator('.article-preview');
+        this.buttonGlobalFeed = page.getByRole('button', { name: 'Global Feed' });
+        this.articles = page.locator('.article-preview h1');
     }
 
         // Бизнес-сценарии на страничке
-    async getProfileName() {
+    getProfileName() {
         return this.profileName;
     }
 

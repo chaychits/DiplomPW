@@ -1,8 +1,5 @@
 import { test } from '@playwright/test';
 
-// todo
-const urlApi = 'https://apichallenges.eviltester.com';
-
 export class TodosService {
     constructor (request) {
         this.request = request;
@@ -28,7 +25,7 @@ export class TodosService {
     // Бизнес-сценарии для эндпоинта
     async getTodos(token){
         return test.step('get /todos', async () => {
-            const response = await this.request.get(`${urlApi}/todos`, {
+            const response = await this.request.get(`${process.env.API_URL}/todos`, {
             headers: {
                 'x-challenger': token
         }
@@ -41,7 +38,7 @@ export class TodosService {
 
 async getTodosById(token, id) {
     return test.step(`GET /todos/${id}`, async () => {
-    const response = await this.request.get(`${urlApi}/todos/${id}`,{
+    const response = await this.request.get(`${process.env.API_URL}/todos/${id}`,{
         headers: {
             'x-challenger': token
         }
@@ -54,7 +51,7 @@ async getTodosById(token, id) {
 
 async 	createTodo(token, todo){
         return test.step('post /todos', async () => {
-            const response = await this.request.post(`${urlApi}/todos`, {
+            const response = await this.request.post(`${process.env.API_URL}/todos`, {
             headers: {
                 'x-challenger': token
         },
@@ -67,7 +64,7 @@ async 	createTodo(token, todo){
 
 async updateTodo(token, id, todo) {
     return test.step('put/todos{id}', async () => {
-        const response = await this.request.put(`${urlApi}/todos/${id}`, {
+        const response = await this.request.put(`${process.env.API_URL}/todos/${id}`, {
             headers: {
                 'x-challenger': token
             },
@@ -81,7 +78,7 @@ async updateTodo(token, id, todo) {
 
 async deleteTodo(token, id) {
     return test.step('post/todos{id}', async () => {
-        const response = await this.request.delete(`${urlApi}/todos/${id}`, {
+        const response = await this.request.delete(`${process.env.API_URL}/todos/${id}`, {
             headers: {
                 'x-challenger': token
             }

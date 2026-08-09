@@ -1,5 +1,4 @@
 import {test, expect} from '@playwright/test';
-const URL = 'https://realworld.qa.guru/';
 
 export class MainPage {
     constructor (page) {
@@ -21,6 +20,6 @@ export class MainPage {
         async goto ()
         {
             return test.step('Открыть главную страницу', async() =>{
-        await this.page.goto(URL)})
+        await this.page.goto(`/`)})
     }
 }

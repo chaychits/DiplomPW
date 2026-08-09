@@ -1,5 +1,4 @@
 import { test } from '@playwright/test';
-const urlApi = 'https://apichallenges.eviltester.com';
 
 export class ChallengerService {
     constructor (request) {
@@ -12,7 +11,7 @@ export class ChallengerService {
         async post() {
             return test.step('post/challenger', async() => {
 
-                let response = await this.request.post(`${urlApi}/challenger`);
+                let response = await this.request.post(`${process.env.API_URL}/challenger`);
                 const headers = await response.headers()
                 
                 

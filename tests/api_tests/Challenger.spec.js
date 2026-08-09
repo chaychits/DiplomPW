@@ -1,6 +1,5 @@
 import { test } from '../../src/fixtures/fixture.js';
 import { expect } from '@playwright/test';
-import { TodoBuilder } from '../../src/builders/todo.js';
 
 
 const urlApi = 'https://apichallenges.eviltester.com';
@@ -8,8 +7,6 @@ const urlApi = 'https://apichallenges.eviltester.com';
 let token
 let location
 
-const EXISTING_ID = 1;
-const INVALID_ID = 99999;
 
 test.beforeAll(async ({ api }) => {
     
