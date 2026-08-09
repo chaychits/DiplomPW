@@ -14,7 +14,7 @@ pw7:
 runs-on: ubuntu-latest
 timeout-minutes: 30
 
-```
+
 env:
   UI_URL: ${{ vars.UI_URL }}
   API_URL: ${{ vars.API_URL }}
