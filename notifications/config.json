@@ -9,11 +9,10 @@
     "enableChart": true,
     "darkMode": true,
     "links": {
-      "report": "${BUILD_URL}",
-      "dashboard": "${ALLURE_DASHBOARD_URL}",
-      "testops": "${ALLURE_JOB_RUN_URL}",
-      "build": "${BUILD_URL}"
-    }
+          "testops": "${{ env.ALLURE_JOB_RUN_URL }}",
+          "report": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",
+          "build": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+        }
   },
   "telegram": {
     "token": "${TELEGRAM_TOKEN}",

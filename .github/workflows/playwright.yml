@@ -45,15 +45,15 @@ jobs:
         run: npx playwright test
 
       - name: Загрузить результаты в Allure TestOps
-        if: always()
-        env:
-          ALLURE_ENDPOINT: https://allure.autotests.cloud
-          ALLURE_TOKEN: ${{ secrets.ALLURE_TOKEN }}
-        run: |
-          allurectl upload allure-results \
-            --endpoint "$ALLURE_ENDPOINT" \
-            --project-id 5305 \
-            --token "$ALLURE_TOKEN"
+          - name: Получить ссылку Allure TestOps
+    if: always()
+    continue-on-error: true
+    run: |
+      allurectl job-run env | grep -E '^ALLURE_(JOB_RUN_URL|LAUNCH_URL)=' >> "$GITHUB_ENV"
+    env:
+      ALLURE_ENDPOINT: https://allure.autotests.cloud
+      ALLURE_PROJECT_ID: 5305
+      ALLURE_TOKEN: ${{ secrets.ALLURE_TOKEN }}
 
       - name: Сгенерировать Allure Report
         if: always()
@@ -106,7 +106,6 @@ jobs:
               "links": {
                 "report": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",
                 "build": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",
-                "testops": "https://allure.autotests.cloud/project/5305"
 
             },
             "telegram": {
