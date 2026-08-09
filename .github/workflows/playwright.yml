@@ -14,6 +14,10 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
 
+    env:
+      UI_URL: ${{ vars.UI_URL }}
+      API_URL: ${{ vars.API_URL }}
+
     steps:
       - name: Checkout
         uses: actions/checkout@v6
@@ -105,7 +109,7 @@ jobs:
               }
             },
             "telegram": {
-              "token": "${{ secrets.TELEGRAM_TOKEN }}",
+              "token": "${{ secrets.TELEGRAM_BOT_TOKEN }}",
               "chat": "${{ secrets.TELEGRAM_CHAT_ID }}",
               "templatePath": "/templates/telegram.ftl"
             }
