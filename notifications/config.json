@@ -9,8 +9,6 @@
     "enableChart": true,
     "darkMode": true,
     "links": {
-          "testops": "${{ env.ALLURE_JOB_RUN_URL }}",
-          "report": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",
           "build": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
         }
   },
