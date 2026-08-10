@@ -38,7 +38,7 @@ jobs:
       - name: Setup AllureCTL
         uses: allure-framework/setup-allurectl@v1
         with:
-          allure-endpoint: https://allure.qшa.guru
+          allure-endpoint: https://allure.qa.guru
           allure-token: ${{ secrets.ALLURE_TOKEN }}
           allure-project-id: 5305
 
