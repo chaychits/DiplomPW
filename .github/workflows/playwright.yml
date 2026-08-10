@@ -42,6 +42,18 @@ jobs:
           allure-token: ${{ secrets.ALLURE_TOKEN }}
           allure-project-id: 5305
 
+      - name: Проверить ALLURE_TOKEN
+        if: always()
+        env:
+          ALLURE_TOKEN: ${{ secrets.ALLURE_TOKEN }}
+        run: |
+          if [ -z "$ALLURE_TOKEN" ]; then
+            echo "ERROR: ALLURE_TOKEN EMPTY"
+            exit 1
+          fi
+          echo "ALLURE_TOKEN exists"
+          echo "Token length: ${#ALLURE_TOKEN}"   
+
       - name: Запустить тесты
         run: npx playwright test
 
