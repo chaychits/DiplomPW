@@ -1,4 +1,4 @@
-name: pw7 автотесты UI/API
+name: pw7 ╨░╨▓╤В╨╛╤В╨╡╤Б╤В╤Л UI/API
 
 on:
   push:
@@ -29,10 +29,10 @@ jobs:
           node-version: 24
           cache: npm
 
-      - name: Установить зависимости
+      - name: ╨г╤Б╤В╨░╨╜╨╛╨▓╨╕╤В╤М ╨╖╨░╨▓╨╕╤Б╨╕╨╝╨╛╤Б╤В╨╕
         run: npm ci
 
-      - name: Установить браузеры Playwright
+      - name: ╨г╤Б╤В╨░╨╜╨╛╨▓╨╕╤В╤М ╨▒╤А╨░╤Г╨╖╨╡╤А╤Л Playwright
         run: npx playwright install --with-deps chromium
 
       - name: Setup AllureCTL
@@ -42,14 +42,21 @@ jobs:
           allure-token: ${{ secrets.ALLURE_TOKEN }}
           allure-project-id: 5305
 
-      - name: Запустить тесты
+      - name: ╨Ч╨░╨┐╤Г╤Б╤В╨╕╤В╤М ╤В╨╡╤Б╤В╤Л
         run: npx playwright test
 
-      - name: Загрузить результаты в Allure TestOps
+      - name: ╨Ч╨░╨│╤А╤Г╨╖╨╕╤В╤М ╤А╨╡╨╖╤Г╨╗╤М╤В╨░╤В╤Л ╨▓ Allure TestOps
         if: always()
-        run: allurectl upload allure-results
+        env:
+          ALLURE_ENDPOINT: https://allure.autotests.cloud
+          ALLURE_TOKEN: ${{ secrets.ALLURE_TOKEN }}
+        run: |
+          allurectl upload allure-results \
+            --endpoint "$ALLURE_ENDPOINT" \
+            --project-id 5305 \
+            --token "$ALLURE_TOKEN"
 
-      - name: Получить ссылку Allure TestOps
+      - name: ╨Я╨╛╨╗╤Г╤З╨╕╤В╤М ╤Б╤Б╤Л╨╗╨║╤Г Allure TestOps
         if: always()
         continue-on-error: true
         run: |
@@ -59,7 +66,7 @@ jobs:
           ALLURE_PROJECT_ID: 5305
           ALLURE_TOKEN: ${{ secrets.ALLURE_TOKEN }}
 
-      - name: Сгенерировать Allure Report
+      - name: ╨б╨│╨╡╨╜╨╡╤А╨╕╤А╨╛╨▓╨░╤В╤М Allure Report
         if: always()
         run: |
           npx allure-commandline generate allure-results \
@@ -67,7 +74,7 @@ jobs:
             --clean
         continue-on-error: true
 
-      - name: Загрузить отчеты как Artifact
+      - name: ╨Ч╨░╨│╤А╤Г╨╖╨╕╤В╤М ╨╛╤В╤З╨╡╤В╤Л ╨║╨░╨║ Artifact
         if: always()
         uses: actions/upload-artifact@v4
         with:
@@ -85,7 +92,7 @@ jobs:
           distribution: temurin
           java-version: '17'
 
-      - name: Скачать Allure Notifications
+      - name: ╨б╨║╨░╤З╨░╤В╤М Allure Notifications
         if: always()
         run: |
           mkdir -p notifications
@@ -93,7 +100,7 @@ jobs:
             https://github.com/qa-guru/allure-notifications/releases/download/v5.0.2/allure-notifications-5.0.2.jar \
             -o notifications/allure-notifications.jar
 
-      - name: Создать config.json для Telegram
+      - name: ╨б╨╛╨╖╨┤╨░╤В╤М config.json ╨┤╨╗╤П Telegram
         if: always()
         run: |
           cat > notifications/config.json <<EOF
@@ -121,7 +128,7 @@ jobs:
           }
           EOF
 
-      - name: Отправить уведомление в Telegram
+      - name: ╨Ю╤В╨┐╤А╨░╨▓╨╕╤В╤М ╤Г╨▓╨╡╨┤╨╛╨╝╨╗╨╡╨╜╨╕╨╡ ╨▓ Telegram
         if: always()
         run: |
           java \
