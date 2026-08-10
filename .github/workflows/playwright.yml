@@ -61,15 +61,6 @@ jobs:
         if: always()
         run: allurectl upload allure-results
 
-      - name: Получить ссылку Allure TestOps
-        if: always()
-        continue-on-error: true
-        run: |
-          allurectl job-run env | grep '^ALLURE_LAUNCH_URL=' >> "$GITHUB_ENV"
-        env:
-          ALLURE_ENDPOINT: https://allure.autotests.cloud
-          ALLURE_PROJECT_ID: 5305
-          ALLURE_TOKEN: ${{ secrets.ALLURE_TOKEN }}
 
       - name: Сгенерировать Allure Report
         if: always()
@@ -120,7 +111,7 @@ jobs:
               "enableChart": true,
               "darkMode": true,
               "links": {
-                "testops": "${ALLURE_LAUNCH_URL}",
+                "testops": "https://allure.qa.guru/project/5305",
                 "report": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",
                 "build": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
               }

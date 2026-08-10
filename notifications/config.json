@@ -9,7 +9,9 @@
     "enableChart": true,
     "darkMode": true,
     "links": {
-          "build": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+            "testops": "https://allure.qa.guru/project/5305",
+  "report": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",
+  "build": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
         }
   },
   "telegram": {
