@@ -3,10 +3,10 @@ name: pw7 автотесты UI/API
 on:
   push:
     branches:
-      - master
+      - main
   pull_request:
     branches:
-      - master
+      - main
   workflow_dispatch:
 
 jobs:
