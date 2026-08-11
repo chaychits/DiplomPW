@@ -1,7 +1,5 @@
 # 🎓 DiplomPW
 
-### 🚀 Масштабируемый фреймворк автоматизированного тестирования UI + API
-
 ## 📌 О проекте
 
 **DiplomPW** — дипломный проект по автоматизации тестирования веб-приложения с использованием **JavaScript + Playwright**.
@@ -35,41 +33,32 @@
 
 ### 🖥️ UI
 
-Для UI-тестов используется веб-приложение:
-
-[**RealWorld QA Guru**][https://realworld.qa.guru/]
-
-Тестируются пользовательские сценарии регистрации, авторизации и работы со статьями.
+https://realworld.qa.guru/
 
 ### 🔌 API
 
-Для API-тестирования используется:
-
-**[API Challenges — EvilTester](https://apichallenges.eviltester.com)**
+https://apichallenges.eviltester.com
 
 ---
 
 # 📁 Структура проекта
-
-DiplomProject_PW/
+```
+DiplomPW/
 │
 ├── .github/
-│   └── workflows/
-│       └── playwright.yml
+│   └── ...
 │
 ├── notifications/
-│   ├── allure-notifications-5.0.2.jar
-│   └── config.json
+│   └── ...
+│
+├── screenshots/
+│   └── ...
 │
 ├── src/
 │   ├── builders/
-│   │
 │   ├── fixtures/
-│   │
 │   ├── pages/
-│   │
 │   ├── services/
-│   │
 │   └── index.js
 │
 ├── tests/
@@ -89,104 +78,65 @@ DiplomProject_PW/
 ├── package-lock.json
 ├── playwright.config.js
 └── README.md
-
-
+```
 ---
 
 # ⚙️ Установка
 
-## 1. Клонирование проекта
+1. Клонирование проекта  - git clone https://github.com/chaychits/DiplomPW.git
 
-git clone https://github.com/chaychits/DiplomProject_PW.git
+2. Установка зависимостей - npm ci
 
-
-## 2. Установка зависимостей
-
-npm ci
-
-## 3. Установка браузера Chromium
-
-npx playwright install chromium
+3. Установка браузера Chromium - npx playwright install chromium
 
 
 # 🔐 Переменные окружения
 
 Секретные данные не хранятся непосредственно в исходном коде.
 
-Для локального запуска используется файл:
+Пример переменных находится в:  .env.example
 
-.env
-
-Пример переменных находится в:
-
-.env.example
-
-
-Секреты CI/CD хранятся в соответствующих настройках GitHub Actions и Jenkins.
+Секреты хранятся в соответствующих настройках CI/CD.
 
 ---
 
 # ▶️ Запуск тестов
 
-## Все тесты
+Все тесты - npx playwright test
 
-npx playwright test
+UI-тесты - npx playwright test tests/ui_tests
 
----
+API-тесты - npx playwright test tests/api_tests
 
-## UI-тесты
+Запуск в UI Mode - npm run ui
 
-npx playwright test tests/ui_tests
-
----
-
-## API-тесты
-
-npx playwright test tests/api_tests
-
----
-
-## Запуск в UI Mode
-
-npm run ui
-
----
-
-## Запуск с HTML Report
-
-npx playwright show-report
-
----
-
-# 📊 Allure Report
-![Allure Report](AllureSuitesDiplom.png)
-
-
-# ☁️ Allure TestOps
-![Allure TestOps](TestopsDiplom.png)
-
-Результаты автоматизированного тестирования автоматически отправляются в **Allure TestOps**. 
-
-Результаты запуска доступны в Allure TestOps после выполнения CI/CD.
-
----
-
-# 🤖 Telegram Notifications
-
-После выполнения тестов формируется уведомление в Telegram.
-![Telegram](TelegramDiplom.png)
----
+Запуск с HTML Report - npx playwright show-report
 
 # 🔄 CI/CD
-
 В проекте реализована интеграция с двумя CI/CD системами.
 
 ## 🐙 GitHub Actions
-
-![Git hub](GithubaActionsDiplom.png)
+Тесты запускаются автоматически при push в main, создании Pull Request и вручную через Run workflow.
+![GitHub Actions](screenshots/GithubaActionsDiplom.png)
 
 ## 🔧 Jenkins
+Тесты запускаются через Build now с последующей генерацией Allure Report.
+![Jenkins](screenshots/JenkinsDiplom.png)
 
-![Jenkins](JenkinsDiplom.png)
+# 📊 Allure Report
+После выполнения тестов формируется Allure Report с результатами UI и API тестирования.
+![Allure Overview](screenshots/AllureOverviewDiplom.png)
+![Allure Suites](screenshots/AllureSuitesDiplom.png)
+
+# ☁️ Allure TestOps
+Результаты тестирования автоматически отправляются в **Allure TestOps**.
+![Allure TestOps](screenshots/TestopsDiplom.png)
+
+# 🤖 Telegram Notifications
+После выполнения тестов формируется уведомление в Telegram.
+
+![Telegram](screenshots/TelegramDiplom.png)
+
 
 ---
+
