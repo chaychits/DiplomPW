@@ -102,13 +102,13 @@ jobs:
           cat > notifications/config.json <<EOF
           {
             "base": {
-              "project": "dip",
+              "project": "diplom",
               "environment": "GitHub Actions",
               "comment": "Automated test run",
               "language": "en",
               "allureFolder": "allure-report/",
               "allureResultsFolder": "allure-results/",
-              "enableChart": true,
+              "enableChart": false,
               "darkMode": true,
               "links": {
                 "testops": "https://allure.qa.guru/project/5305",
