@@ -1,7 +1,6 @@
 import { test, expect } from '../../src/fixtures/fixture';
 import { allure } from 'allure-playwright';
 import { UserBuilder } from '../../src/builders/index';
-// можно добавить теги в отчет
 
 
 test('Пользователь может зарегистрироваться используя email и пароль', async ({app}) => {
