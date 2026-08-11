@@ -108,7 +108,7 @@ jobs:
               "language": "en",
               "allureFolder": "allure-report/",
               "allureResultsFolder": "allure-results/",
-              "enableChart": false,
+              "enableChart": true,
               "darkMode": true,
               "links": {
                 "testops": "https://allure.qa.guru/project/5305",
