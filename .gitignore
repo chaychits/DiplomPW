@@ -24,3 +24,5 @@ allure-report/
 # OS
 .DS_Store
 Thumbs.db
+
+notifications/*.jar

@@ -17,10 +17,10 @@ test('Пользователь может создать новую статью
     await app.main.openSignUpPage();
     await app.registration.signup(user.username, user.email, user.password);
     await app.yourfeed.openNewArticle();
-    await app.create.createArticle(article.title, article.description, article.content, article.tag)
+    await app.create.createArticle(article.title, article.description, article.content)
 
-    await expect(app.newArticle.newArticle).toHaveText(article.title);
-
+    await expect(app.newArticle.newArticle).toHaveText(article.title); 
+    await expect(app.newArticle.articleContent).toHaveText(article.content);
 });
 
 
@@ -34,16 +34,16 @@ test('Пользователь может изменить название ст
 
     const user = new UserBuilder().withEmail().withPassword().withUsername().build();   
     const article = new ArticleBuilder().withTitle().withDescription().withContent().withTag().build();
+    const updatedTitle = `Updated ${article.title}`;
 
-    await app.main.goto();
     await app.main.openSignUpPage();
     await app.registration.signup(user.username, user.email, user.password);
     await app.yourfeed.openNewArticle();
-    await app.create.createArticle(article.title, article.description, article.content, article.tag)
-    await app.newArticle.editArticle();
-    await app.create.updateArticleTitle(article.title)
+    await app.create.createArticle(article.title, article.description, article.content)
+    await app.newArticle.editArticle();    
+    await app.create.updateArticleTitle(updatedTitle);
 
-    await expect(await app.newArticle.newArticle).toHaveText(article.title);
+    await expect(app.newArticle.newArticle).toHaveText(updatedTitle);
 });
 
 
@@ -57,12 +57,11 @@ test('Пользователь может удалить статью', async ({
 
     const user = new UserBuilder().withEmail().withPassword().withUsername().build();    
     const article = new ArticleBuilder().withTitle().withDescription().withContent().withTag().build();
-    
-    await app.main.goto();
+
     await app.main.openSignUpPage();
     await app.registration.signup(user.username, user.email, user.password);
     await app.yourfeed.openNewArticle();
-    await app.create.createArticle(article.title, article.description, article.content, article.tag)
+    await app.create.createArticle(article.title, article.description, article.content)
     await app.newArticle.deleteArticle();
 
     await expect(app.yourfeed.articleNotAvailable).toHaveText('Articles not available.');

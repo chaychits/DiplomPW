@@ -12,7 +12,6 @@ test('Добавленная в избранное статья отобража
 
     const user = new UserBuilder().withEmail().withPassword().withUsername().build();
 
-    await app.main.goto();
     await app.main.openSignUpPage();
     await app.registration.signup(user.username, user.email, user.password);
     await app.yourfeed.openGlobalFeed();

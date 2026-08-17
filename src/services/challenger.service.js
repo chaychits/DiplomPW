@@ -13,9 +13,6 @@ export class ChallengerService {
 
                 let response = await this.request.post(`${process.env.API_URL}/challenger`);
                 const headers = await response.headers()
-                
-                
-
                 const status = await response.status()
                 
                 return {headers, status}

@@ -1,8 +1,6 @@
 import { test } from '../../src/fixtures/fixture.js';
 import { expect } from '@playwright/test';
-import { TodoBuilder } from '../../src/builders/todo.js';
-
-const urlApi = 'https://apichallenges.eviltester.com';
+import { TodoBuilder } from '../../src/builders/index';
 
 let token
 let location
@@ -15,8 +13,6 @@ test.beforeAll(async ({ api }) => {
     const response = await api.challenger.post();
     token = response.headers['x-challenger']
     location = response.headers['location'];
-
-    console.log(`${urlApi}${location}`)
 });
 
 // Тест 4 Получение списка задач в JSON /todos
@@ -71,6 +67,8 @@ test('POST /todos (422) invalid doneStatus @post', async ({ api }) => {
     const response = await api.todos.createTodo(token, todo);
 
     expect(response.status).toBe(422);
+    expect(response.body.errorMessages).toContain('Failed Validation: doneStatus should be BOOLEAN but was INTEGER'
+    )
 
 });
 // Тест 20 Обновление существующей задачи put /todos
@@ -79,7 +77,7 @@ test('PUT /todos/{id} full (200) @put', async ({ api }) => {
     
     const getResponse = await api.todos.getTodosById(token, EXISTING_ID);
 
-expect(getResponse.status).toBe(200);
+    expect(getResponse.status).toBe(200);
 
     
     const updatedTodo = new TodoBuilder()
@@ -91,13 +89,15 @@ expect(getResponse.status).toBe(200);
     const updateResponse = await api.todos.updateTodo(token, EXISTING_ID, updatedTodo);
 
     expect(updateResponse.status).toBe(200);
-    expect(updateResponse.body.title).toBe('Updated title put');
+    expect(updateResponse.body.title).toBe(updatedTodo.title);
+    expect(updateResponse.body.doneStatus).toBe(updatedTodo.doneStatus);
+    expect(updateResponse.body.description).toBe(updatedTodo.description);
     
 });
 
 // Тест 24 удаление таски /todos
 
-test('DELETE /todos/{id} (200) @delete', async ({ api }) => {
+test('DELETE /todos/{id} (204) @delete', async ({ api }) => {
     const todo = new TodoBuilder()
         .withTitle('A title')
         .withDoneStatus(true)

@@ -1,4 +1,4 @@
- import {test, expect} from '@playwright/test';
+ import {test} from '@playwright/test';
  
  export class ProfilePage {
     constructor (page) {
@@ -30,10 +30,6 @@
     await this.profileDropDown.click();
     })
 };
-
-
-
-
 
 }
 

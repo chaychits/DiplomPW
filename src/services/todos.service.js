@@ -77,7 +77,7 @@ async updateTodo(token, id, todo) {
 
 
 async deleteTodo(token, id) {
-    return test.step('post/todos{id}', async () => {
+    return test.step('delete/todos{id}', async () => {
         const response = await this.request.delete(`${process.env.API_URL}/todos/${id}`, {
             headers: {
                 'x-challenger': token

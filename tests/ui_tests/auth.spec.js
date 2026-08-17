@@ -12,7 +12,6 @@ test('Пользователь может зарегистрироваться �
 
     const user = new UserBuilder().withEmail().withPassword().withUsername().build();
 
-    await app.main.goto();
     await app.main.openSignUpPage();
     await app.registration.signup(user.username, user.email, user.password);
 
@@ -29,7 +28,6 @@ test('Авторизованный пользователь может выйт�
 
     const user = new UserBuilder().withEmail().withPassword().withUsername().build();
 
-    await app.main.goto();
     await app.main.openSignUpPage();
     await app.registration.signup(user.username, user.email, user.password);
     await app.profile.toLogOut();
