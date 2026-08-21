@@ -1,4 +1,4 @@
-import { test, expect } from '../../src/fixtures/fixture';
+import { test, expect } from '../../src/fixtures/index.js';
 import { allure } from 'allure-playwright';
 import { UserBuilder, ArticleBuilder } from '../../src/builders/index';
 
@@ -11,7 +11,7 @@ test('Пользователь может создать новую статью
     await allure.severity('critical');
 
     const user = new UserBuilder().withEmail().withPassword().withUsername().build();
-    const article = new ArticleBuilder().withTitle().withDescription().withContent().withTag().build();
+    const article = new ArticleBuilder().withTitle().withDescription().withContent().build();
 
     await app.main.goto();
     await app.main.openSignUpPage();
@@ -33,7 +33,7 @@ test('Пользователь может изменить название ст
     await allure.severity('critical');
 
     const user = new UserBuilder().withEmail().withPassword().withUsername().build();   
-    const article = new ArticleBuilder().withTitle().withDescription().withContent().withTag().build();
+    const article = new ArticleBuilder().withTitle().withDescription().withContent().build();
     const updatedTitle = `Updated ${article.title}`;
 
     await app.main.openSignUpPage();
@@ -56,7 +56,7 @@ test('Пользователь может удалить статью', async ({
     await allure.severity('critical');
 
     const user = new UserBuilder().withEmail().withPassword().withUsername().build();    
-    const article = new ArticleBuilder().withTitle().withDescription().withContent().withTag().build();
+    const article = new ArticleBuilder().withTitle().withDescription().withContent().build();
 
     await app.main.openSignUpPage();
     await app.registration.signup(user.username, user.email, user.password);

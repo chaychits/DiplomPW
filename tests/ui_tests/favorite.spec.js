@@ -1,4 +1,4 @@
-import { test, expect } from '../../src/fixtures/fixture';
+import { test, expect } from '../../src/fixtures/index.js';
 import { allure } from 'allure-playwright';
 import { UserBuilder } from '../../src/builders/index';
 

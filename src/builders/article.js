@@ -14,11 +14,6 @@ export class ArticleBuilder {
         return this;
     }
 
-    withTag() {
-        this.tag = faker.word.noun();
-        return this;
-    }
-
     build() {
         const result = structuredClone(this);
         return result;
