@@ -9,13 +9,12 @@ export class EditArticlePage {
         this.titleInput = page.getByRole('textbox', { name: 'Article Title' });
         this.articleAboutInput = page.getByRole('textbox', { name: 'What\'s this article about?' });
         this.articleTextInput = page.getByPlaceholder('Write your article (in markdown)');
-        this.tagInput = page.getByRole('textbox', { name: 'Enter tags' }); 
         this.publishArticleButton = page.getByRole('button', { name: 'Publish Article' });
         this.updateArticleButton = page.getByRole('button', { name: 'Update Article' });
     }
 
     // Бизнес-сценарии на страничке
-    async createArticle(articleTitle, articleDescription, articleContent, articleTag ){    
+    async createArticle(articleTitle, articleDescription, articleContent){    
         await this.titleInput.click();
         await this.titleInput.fill(articleTitle);
         await this.articleAboutInput.click();

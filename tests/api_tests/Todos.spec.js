@@ -1,4 +1,4 @@
-import { test } from '../../src/fixtures/fixture.js';
+import { test } from '../../src/fixtures/index.js';
 import { expect } from '@playwright/test';
 import { TodoBuilder } from '../../src/builders/index';
 
